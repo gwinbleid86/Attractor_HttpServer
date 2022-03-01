@@ -1,7 +1,6 @@
 package com.company.lesson44;
 
 import com.company.server.ContentType;
-import com.company.server.RouteHandler;
 import com.company.server.Utils;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -29,9 +28,7 @@ public class Lesson45Server extends Lesson44Server{
         Path path = makeFilePath("login.html");
         sendFile(exchange,path, ContentType.TEXT_HTML);
     }
-    protected void registerPost(String route, RouteHandler handler){
-        getRoutes().put("POST " + route,handler);
-    }
+
     private void loginPost(HttpExchange exchange){
         String cType = getContentType(exchange);
         String raw = getBody(exchange);
