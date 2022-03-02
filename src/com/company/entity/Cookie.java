@@ -1,7 +1,7 @@
-package com.company.lesson44;
+package com.company.entity;
 
 
-import com.company.server.Utils;
+import com.company.util.Utils;
 
 import java.net.URLEncoder;
 import java.nio.charset.Charset;

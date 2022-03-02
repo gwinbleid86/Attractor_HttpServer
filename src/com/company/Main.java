@@ -1,15 +1,13 @@
 package com.company;
 
 
-import com.company.lesson44.Lesson47Server;
-
-import java.io.IOException;
+import com.company.lesson44.Webinar23Server;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            new Lesson47Server("localhost", 9889).start();
-        } catch (IOException e) {
+            new Webinar23Server("localhost", 8080).start();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

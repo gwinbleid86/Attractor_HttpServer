@@ -1,5 +1,7 @@
 package com.company.lesson44;
 
+import com.company.entity.User;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

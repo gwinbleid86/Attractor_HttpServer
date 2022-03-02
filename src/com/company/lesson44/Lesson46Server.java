@@ -1,5 +1,6 @@
 package com.company.lesson44;
 
+import com.company.entity.Cookie;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;

@@ -1,7 +1,8 @@
 package com.company.lesson44;
 
+import com.company.entity.User;
 import com.company.server.ContentType;
-import com.company.server.Utils;
+import com.company.util.Utils;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.BufferedReader;
@@ -16,32 +17,34 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Lesson45Server extends Lesson44Server{
+public class Lesson45Server extends Lesson44Server {
     public List<User> users = new ArrayList<>();
+
     public Lesson45Server(String host, int port) throws IOException {
         super(host, port);
-        registerGet("/login",this::loginGet);
-        registerPost("/login",this::loginPost);
-        users.add(new User("qwe@qwe.qwe","qweqwe"));
-    }
-    private void loginGet(HttpExchange exchange){
-        Path path = makeFilePath("login.html");
-        sendFile(exchange,path, ContentType.TEXT_HTML);
+        registerGet("/login", this::loginGet);
+        registerPost("/login", this::loginPost);
+        users.add(new User("qwe@qwe.qwe", "qweqwe"));
     }
 
-    private void loginPost(HttpExchange exchange){
+    private void loginGet(HttpExchange exchange) {
+        Path path = makeFilePath("login.html");
+        sendFile(exchange, path, ContentType.TEXT_HTML);
+    }
+
+    private void loginPost(HttpExchange exchange) {
         String cType = getContentType(exchange);
         String raw = getBody(exchange);
-        Map<String,String> parsed = Utils.parseUrlEncoded(raw,"&");
+        Map<String, String> parsed = Utils.parseUrlEncoded(raw, "&");
         String fmt = "Необработанные данные:%s\n"
-                +"Content-type:%s\n"
-                +"После обработки:%s";
-        String data = String.format(fmt,raw,cType,parsed);
+                + "Content-type:%s\n"
+                + "После обработки:%s";
+        String data = String.format(fmt, raw, cType, parsed);
         var user = users.stream().filter(c -> c.getEmail().equals(parsed.get("email"))).collect(Collectors.toList()).get(0);
 
         try {
-            redirect303(exchange,"/profile",user);
-        }catch (Exception ex){
+            redirect303(exchange, "/profile", user);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -51,24 +54,26 @@ public class Lesson45Server extends Lesson44Server{
                 .getOrDefault("Content-type", List.of(""))
                 .get(0);
     }
-    protected String getBody(HttpExchange exchange){
+
+    protected String getBody(HttpExchange exchange) {
         InputStream input = exchange.getRequestBody();
         Charset utf8 = StandardCharsets.UTF_8;
-        InputStreamReader isr = new InputStreamReader(input,utf8);
-        try(BufferedReader reader = new BufferedReader(isr)){
+        InputStreamReader isr = new InputStreamReader(input, utf8);
+        try (BufferedReader reader = new BufferedReader(isr)) {
             return reader.lines().collect(Collectors.joining(""));
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return "";
     }
-    protected void redirect303(HttpExchange exchange,String path, User user){
-        try{
-            exchange.getResponseHeaders().add("Location",path);
-            exchange.sendResponseHeaders(303,0);
-            renderTemplate(exchange,"profile.html",user);
+
+    protected void redirect303(HttpExchange exchange, String path, User user) {
+        try {
+            exchange.getResponseHeaders().add("Location", path);
+//            exchange.sendResponseHeaders(303,0);
+            renderTemplate(exchange, "profile.html", user);
             exchange.getResponseBody().close();
-        }catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }

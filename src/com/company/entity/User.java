@@ -1,4 +1,7 @@
-package com.company.lesson44;
+package com.company.entity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
     private String firstName;
@@ -7,6 +10,15 @@ public class User {
     private boolean emailConfirmed = false;
     private String email;
     private String password;
+    private List<Book> tackedBooks = new ArrayList<>();
+
+    public List<Book> getTackedBooks() {
+        return tackedBooks;
+    }
+
+    public void setTackedBooks(Book book) {
+        tackedBooks.add(book);
+    }
 
     public User(String firstName) {
         this(firstName, null, null);

@@ -1,4 +1,4 @@
-package com.company.server;
+package com.company.util;
 
 import java.net.URLDecoder;
 import java.nio.charset.Charset;

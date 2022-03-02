@@ -1,5 +1,6 @@
 package com.company.lesson44;
 
+import com.company.entity.User;
 import com.company.server.BasicServer;
 import com.company.server.ContentType;
 import com.company.server.ResponseCodes;
@@ -9,7 +10,10 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 public class Lesson44Server extends BasicServer {
     private final static Configuration freemarker = initFreeMarker();
